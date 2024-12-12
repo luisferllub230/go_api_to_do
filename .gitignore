@@ -19,7 +19,10 @@
 
 # Go workspace file
 go.work
-go.work.sum
+*.sum
 
 # env file
 .env
+
+# vscode
+.vscode
