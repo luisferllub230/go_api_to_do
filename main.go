@@ -10,6 +10,7 @@ import (
 
 func main() {
 	// Initialize the database
+	// TODO: Move this to a config file
 	db.InitConnection(db.Config{
 		Host:     "localhost",
 		Port:     "5432",
