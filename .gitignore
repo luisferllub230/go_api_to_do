@@ -26,3 +26,10 @@ go.work
 
 # vscode
 .vscode
+
+# air
+*.toml
+bin
+
+# tmp files
+tmp
