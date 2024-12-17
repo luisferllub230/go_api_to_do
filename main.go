@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"lfernandez.com/todo/controller"
 	"lfernandez.com/todo/db"
-	"lfernandez.com/todo/routes"
 )
 
 func main() {
@@ -21,9 +21,17 @@ func main() {
 		DBType:   "postgres",
 	})
 
-	// Create a new router
 	router := mux.NewRouter()
-	router.HandleFunc("/", routes.Get).Methods("GET")
+
+	// tasks routers
+	router.HandleFunc("/get/tasks", controller.Get).Methods("GET")
+	router.HandleFunc("/get/tasks{id}", controller.GetById).Methods("GET")
+	router.HandleFunc("/create/tasks", controller.Post).Methods("POST")
+	router.HandleFunc("/update/tasks", controller.Put).Methods("PUT")
+	router.HandleFunc("/update/tasks{id}", controller.Patch).Methods("PATCH")
+	router.HandleFunc("/delete/tasks", controller.Delete).Methods("DELETE")
+	router.HandleFunc("/delete/tasks{id}", controller.Delete).Methods("DELETE")
+	router.HandleFunc("/options/tasks", controller.Options).Methods("OPTIONS")
 
 	// Start the server
 	http.ListenAndServe(":3000", router)

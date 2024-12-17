@@ -8,4 +8,5 @@ type Task struct {
 	Description string
 	status      string
 	Done        bool
+	UserId      uint
 }
