@@ -13,7 +13,7 @@ func GetTasks(limit int) ([]models.Task, error) {
 
 func GetTaskById(id int) models.Task {
 	var task models.Task
-	db.DB.First(&task, id)
+	db.DB.First(&task, "id = ?", id)
 	return task
 }
 

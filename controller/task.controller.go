@@ -28,29 +28,22 @@ func Get(w http.ResponseWriter, r *http.Request) {
 func GetById(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id := params["id"]
+	idInt, errAtoi := strconv.Atoi(id)
 
-	if id == "" {
-		http.Error(w, "id is required", http.StatusBadRequest)
-		return
+	if errAtoi != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(errAtoi.Error()))
 	}
 
-	idInt, err := strconv.Atoi(id)
+	var task = services.GetTaskById(idInt)
 
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
-	var task models.Task = services.GetTaskById(idInt)
-	jsonTask, err := json.Marshal(task)
-
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+	if task.ID == 0 {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(errAtoi.Error()))
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(jsonTask)
+	json.NewEncoder(w).Encode(task)
 }
 
 func Post(w http.ResponseWriter, r *http.Request) {
