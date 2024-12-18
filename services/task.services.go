@@ -5,10 +5,10 @@ import (
 	"lfernandez.com/todo/models"
 )
 
-func GetTasks(limit int) []models.Task {
+func GetTasks(limit int) ([]models.Task, error) {
 	var tasks []models.Task
 	db.DB.Limit(limit).Find(&tasks)
-	return tasks
+	return tasks, nil
 }
 
 func GetTaskById(id int) models.Task {

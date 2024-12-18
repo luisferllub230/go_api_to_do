@@ -11,16 +11,18 @@ import (
 )
 
 func Get(w http.ResponseWriter, r *http.Request) {
-	var tasks []models.Task = services.GetTasks(10)
-	jsonTask, err := json.Marshal(tasks)
+	var tasks []models.Task
+	var err error
+
+	tasks, err = services.GetTasks(10)
 
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(jsonTask)
+	json.NewEncoder(w).Encode(tasks)
 }
 
 func GetById(w http.ResponseWriter, r *http.Request) {
@@ -61,6 +63,7 @@ func Post(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(err.Error()))
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(createTasks)
 }
 
