@@ -52,29 +52,16 @@ func GetById(w http.ResponseWriter, r *http.Request) {
 }
 
 func Post(w http.ResponseWriter, r *http.Request) {
-	// body, err := iotil.ReadAll(r.Body)
+	var tasks []models.Task
+	json.NewDecoder(r.Body).Decode(&tasks)
+	createTasks, err := services.CreateTask(tasks)
 
-	// if err != nil {
-	// 	http.Error(w, err.Error(), http.StatusBadRequest)
-	// 	return
-	// }
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+	}
 
-	// var tasks []models.Task
-	// var addedTasks []models.Task
-	// json.Unmarshal(body, &tasks)
-	// addedTasks = services.CreateTask(tasks)
-
-	// jsonTask, err := json.Marshal(addedTasks)
-
-	// fmt.Println(jsonTask)
-
-	// if err != nil {
-	// 	http.Error(w, err.Error(), http.StatusInternalServerError)
-	// 	return
-	// }
-
-	// w.Header().Set("Content-Type", "application/json")
-	// w.Write(jsonTask)
+	json.NewEncoder(w).Encode(createTasks)
 }
 
 func Put(w http.ResponseWriter, r *http.Request) {

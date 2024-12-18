@@ -22,10 +22,11 @@ var DB *gorm.DB
 
 func InitConnection(config Config) {
 	dns := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=UTC", config.Host, config.User, config.Password, config.Name, config.Port)
-	DB, error := gorm.Open(postgres.Open(dns), &gorm.Config{})
+	var err error
+	DB, err = gorm.Open(postgres.Open(dns), &gorm.Config{})
 
-	if error != nil {
-		panic(error)
+	if err != nil {
+		panic(err)
 	} else {
 		fmt.Println("Connected to database")
 	}

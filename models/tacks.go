@@ -6,7 +6,7 @@ type Task struct {
 	gorm.Model
 	Title       string
 	Description string
-	status      string
+	Status      string
 	Done        bool
 	UserId      uint
 }

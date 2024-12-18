@@ -5,33 +5,37 @@ import (
 	"lfernandez.com/todo/models"
 )
 
-var DB = db.DB
-
 func GetTasks(limit int) []models.Task {
 	var tasks []models.Task
-	DB.Limit(limit).Find(&tasks)
+	db.DB.Limit(limit).Find(&tasks)
 	return tasks
 }
 
 func GetTaskById(id int) models.Task {
 	var task models.Task
-	DB.First(&task, id)
+	db.DB.First(&task, id)
 	return task
 }
 
-func CreateTask(tasks []models.Task) []models.Task {
+func CreateTask(tasks []models.Task) ([]models.Task, error) {
 	var createdTasks []models.Task
 	for _, task := range tasks {
-		DB.Create(&task)
+		createdTask := db.DB.Create(&task)
+		err := createdTask.Error
+
+		if err != nil {
+			return nil, err
+		}
+
 		createdTasks = append(createdTasks, task)
 	}
-	return createdTasks
+	return createdTasks, nil
 }
 
 func UpdateTask(tasks []models.Task) []models.Task {
 	var updatedTasks []models.Task
 	for _, task := range tasks {
-		DB.Save(&task)
+		db.DB.Save(&task)
 		updatedTasks = append(updatedTasks, task)
 	}
 	return updatedTasks
@@ -40,7 +44,7 @@ func UpdateTask(tasks []models.Task) []models.Task {
 func DeleteTask(tasks []models.Task) []models.Task {
 	var deletedTasks []models.Task
 	for _, task := range tasks {
-		DB.Delete(&task)
+		db.DB.Delete(&task)
 		deletedTasks = append(deletedTasks, task)
 	}
 	return deletedTasks
@@ -49,7 +53,7 @@ func DeleteTask(tasks []models.Task) []models.Task {
 func PatchTask(tasks []models.Task) []models.Task {
 	var patchedTasks []models.Task
 	for _, task := range tasks {
-		DB.Save(&task)
+		db.DB.Save(&task)
 		patchedTasks = append(patchedTasks, task)
 	}
 	return patchedTasks
