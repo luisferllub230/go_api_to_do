@@ -47,13 +47,19 @@ func UpdateTask(tasks []models.Task) ([]models.Task, error) {
 	return updatedTasks, nil
 }
 
-func DeleteTask(tasks []models.Task) []models.Task {
+func DeleteTask(tasks []models.Task) ([]models.Task, error) {
 	var deletedTasks []models.Task
 	for _, task := range tasks {
-		db.DB.Delete(&task)
+		deletedTask := db.DB.Delete(&task)
+		err := deletedTask.Error
+
+		if err != nil {
+			return nil, err
+		}
+
 		deletedTasks = append(deletedTasks, task)
 	}
-	return deletedTasks
+	return deletedTasks, nil
 }
 
 func PatchTask(tasks []models.Task) []models.Task {

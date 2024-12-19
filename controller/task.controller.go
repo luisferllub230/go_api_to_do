@@ -76,15 +76,18 @@ func Put(w http.ResponseWriter, r *http.Request) {
 }
 
 func Delete(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Hello, World!"))
-}
 
-func DeleteById(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Hello, World!"))
-}
+	var tasks []models.Task
+	json.NewDecoder(r.Body).Decode(&tasks)
+	deleteTasks, err := services.DeleteTask(tasks)
 
-func Patch(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Hello, World!"))
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(deleteTasks)
 }
 
 func Options(w http.ResponseWriter, r *http.Request) {

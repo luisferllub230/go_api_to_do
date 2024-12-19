@@ -29,7 +29,6 @@ func main() {
 	router.HandleFunc("/create/tasks", controller.Post).Methods("POST")
 	router.HandleFunc("/update/tasks", controller.Put).Methods("PUT")
 	router.HandleFunc("/delete/tasks", controller.Delete).Methods("DELETE")
-	router.HandleFunc("/delete/tasks{id}", controller.Delete).Methods("DELETE")
 	router.HandleFunc("/options/tasks", controller.Options).Methods("OPTIONS")
 
 	// Start the server
