@@ -61,7 +61,18 @@ func Post(w http.ResponseWriter, r *http.Request) {
 }
 
 func Put(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Hello, World!"))
+
+	var tasks []models.Task
+	json.NewDecoder(r.Body).Decode(&tasks)
+	updateTasks, err := services.UpdateTask(tasks)
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(updateTasks)
 }
 
 func Delete(w http.ResponseWriter, r *http.Request) {

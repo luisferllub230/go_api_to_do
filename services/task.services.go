@@ -32,13 +32,19 @@ func CreateTask(tasks []models.Task) ([]models.Task, error) {
 	return createdTasks, nil
 }
 
-func UpdateTask(tasks []models.Task) []models.Task {
+func UpdateTask(tasks []models.Task) ([]models.Task, error) {
 	var updatedTasks []models.Task
 	for _, task := range tasks {
-		db.DB.Save(&task)
+		updatedTask := db.DB.Save(&task)
+		err := updatedTask.Error
+
+		if err != nil {
+			return nil, err
+		}
 		updatedTasks = append(updatedTasks, task)
+
 	}
-	return updatedTasks
+	return updatedTasks, nil
 }
 
 func DeleteTask(tasks []models.Task) []models.Task {

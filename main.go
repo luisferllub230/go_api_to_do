@@ -28,7 +28,6 @@ func main() {
 	router.HandleFunc("/get/tasks/{id}", controller.GetById).Methods("GET")
 	router.HandleFunc("/create/tasks", controller.Post).Methods("POST")
 	router.HandleFunc("/update/tasks", controller.Put).Methods("PUT")
-	router.HandleFunc("/update/tasks{id}", controller.Patch).Methods("PATCH")
 	router.HandleFunc("/delete/tasks", controller.Delete).Methods("DELETE")
 	router.HandleFunc("/delete/tasks{id}", controller.Delete).Methods("DELETE")
 	router.HandleFunc("/options/tasks", controller.Options).Methods("OPTIONS")
