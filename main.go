@@ -29,7 +29,15 @@ func main() {
 	router.HandleFunc("/create/tasks", controller.Post).Methods("POST")
 	router.HandleFunc("/update/tasks", controller.Put).Methods("PUT")
 	router.HandleFunc("/delete/tasks", controller.Delete).Methods("DELETE")
-	router.HandleFunc("/options/tasks", controller.Options).Methods("OPTIONS")
+
+	// options
+	router.HandleFunc("/options", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Allow", "GET, POST, PUT, DELETE, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		w.WriteHeader(http.StatusNoContent)
+	}).Methods("OPTIONS")
 
 	// Start the server
 	http.ListenAndServe(":3000", router)
