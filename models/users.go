@@ -9,4 +9,5 @@ type User struct {
 	Name     string
 	Email    string
 	Password string
+	Task     []Task `gorm:"foreignkey:id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL"`
 }

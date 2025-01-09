@@ -7,13 +7,13 @@ import (
 
 func GetTasks(limit int) ([]models.Task, error) {
 	var tasks []models.Task
-	db.DB.Limit(limit).Find(&tasks)
+	db.DB.Preload("User").Limit(limit).Find(&tasks)
 	return tasks, nil
 }
 
 func GetTaskById(id int) models.Task {
 	var task models.Task
-	db.DB.First(&task, "id = ?", id)
+	db.DB.Preload("User").First(&task, "id = ?", id)
 	return task
 }
 

@@ -10,7 +10,7 @@ import (
 	"lfernandez.com/todo/services"
 )
 
-func Get(w http.ResponseWriter, r *http.Request) {
+func TaskGet(w http.ResponseWriter, r *http.Request) {
 	var tasks []models.Task
 	var err error
 
@@ -25,7 +25,7 @@ func Get(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(tasks)
 }
 
-func GetById(w http.ResponseWriter, r *http.Request) {
+func TaskGetById(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id := params["id"]
 	idInt, errAtoi := strconv.Atoi(id)
@@ -46,7 +46,7 @@ func GetById(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(task)
 }
 
-func Post(w http.ResponseWriter, r *http.Request) {
+func TaskPost(w http.ResponseWriter, r *http.Request) {
 	var tasks []models.Task
 	json.NewDecoder(r.Body).Decode(&tasks)
 	createTasks, err := services.CreateTask(tasks)
@@ -60,7 +60,7 @@ func Post(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(createTasks)
 }
 
-func Put(w http.ResponseWriter, r *http.Request) {
+func TaskPut(w http.ResponseWriter, r *http.Request) {
 
 	var tasks []models.Task
 	json.NewDecoder(r.Body).Decode(&tasks)
@@ -75,7 +75,7 @@ func Put(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(updateTasks)
 }
 
-func Delete(w http.ResponseWriter, r *http.Request) {
+func TaskDelete(w http.ResponseWriter, r *http.Request) {
 
 	var tasks []models.Task
 	json.NewDecoder(r.Body).Decode(&tasks)

@@ -24,11 +24,17 @@ func main() {
 	router := mux.NewRouter()
 
 	// tasks routers
-	router.HandleFunc("/get/tasks", controller.Get).Methods("GET")
-	router.HandleFunc("/get/tasks/{id}", controller.GetById).Methods("GET")
-	router.HandleFunc("/create/tasks", controller.Post).Methods("POST")
-	router.HandleFunc("/update/tasks", controller.Put).Methods("PUT")
-	router.HandleFunc("/delete/tasks", controller.Delete).Methods("DELETE")
+	router.HandleFunc("/get/tasks", controller.TaskGet).Methods("GET")
+	router.HandleFunc("/get/tasks/{id}", controller.TaskGetById).Methods("GET")
+	router.HandleFunc("/create/tasks", controller.TaskPost).Methods("POST")
+	router.HandleFunc("/update/tasks", controller.TaskPut).Methods("PUT")
+	router.HandleFunc("/delete/tasks", controller.TaskDelete).Methods("DELETE")
+
+	// users routers
+	router.HandleFunc("/get/users", controller.UserGet).Methods("GET")
+	router.HandleFunc("/create/users", controller.UserPost).Methods("POST")
+	router.HandleFunc("/update/users", controller.UserPut).Methods("PUT")
+	router.HandleFunc("/delete/users", controller.UserDelete).Methods("DELETE")
 
 	// options
 	router.HandleFunc("/options", func(w http.ResponseWriter, r *http.Request) {
