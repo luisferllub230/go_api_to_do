@@ -21,6 +21,7 @@ func CreateTask(tasks []models.Task) ([]models.Task, error) {
 	var createdTasks []models.Task
 	for _, task := range tasks {
 		createdTask := db.DB.Create(&task)
+		createdTask.Preload("User")
 		err := createdTask.Error
 
 		if err != nil {

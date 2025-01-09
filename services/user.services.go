@@ -11,10 +11,11 @@ func GetUsers(limit int) ([]models.User, error) {
 	return users, nil
 }
 
-func CreateUsers(tasks []models.User) ([]models.User, error) {
+func CreateUsers(users []models.User) ([]models.User, error) {
 	var createdUsers []models.User
-	for _, user := range tasks {
+	for _, user := range users {
 		createdUser := db.DB.Create(&user)
+		createdUser.Preload("Task")
 		err := createdUser.Error
 
 		if err != nil {

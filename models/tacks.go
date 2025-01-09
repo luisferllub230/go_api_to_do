@@ -9,5 +9,5 @@ type Task struct {
 	Status      string
 	Done        bool
 	UserId      int
-	User        User `gorm:"foreignKey:UserId"`
+	User        User
 }

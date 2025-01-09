@@ -6,8 +6,8 @@ import "gorm.io/gorm"
 
 type User struct {
 	gorm.Model
-	Name     string
-	Email    string
+	Name     string `gorm:"unique"`
+	Email    string `gorm:"unique"`
 	Password string
-	Task     []Task `gorm:"foreignkey:id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL"`
+	Task     []Task `gorm:"foreignkey:UserId;constraint:OnUpdate:CASCADE,OnDelete:SET NULL"`
 }
