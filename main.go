@@ -32,7 +32,7 @@ func main() {
 
 	// users routers
 	router.HandleFunc("/get/users", controller.UserGet).Methods("GET")
-	router.HandleFunc("/create/users", controller.UserPost).Methods("POST")
+	router.HandleFunc("/register", controller.UserPost).Methods("POST")
 	router.HandleFunc("/update/users", controller.UserPut).Methods("PUT")
 	router.HandleFunc("/delete/users", controller.UserDelete).Methods("DELETE")
 

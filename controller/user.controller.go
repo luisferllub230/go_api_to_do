@@ -29,8 +29,8 @@ func UserPost(w http.ResponseWriter, r *http.Request) {
 	createUsers, err := services.CreateUsers(users)
 
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte(err.Error()))
+		w.WriteHeader(http.StatusConflict)
+		json.NewEncoder(w).Encode(err.Error())
 	}
 
 	w.Header().Set("Content-Type", "application/json")
